@@ -1,14 +1,18 @@
-# MoH Radiant (.map editor tools for MOH:AA)
+# MOHTools (.map editor & BSP compiler for MOH:AA)
 
 ![screenshot_2017-12-11_17-16-49](https://user-images.githubusercontent.com/8376353/33835350-3e283820-de97-11e7-8073-424b792e7d5a.png)
 
-Includes:
+### Includes:
 1. MoHRadiant .map editor
 2. Standart MP .map files (dm/mohdm1 - dm/mohdm7, obj_team1 - obj_team4) as they were released in 2005
 3. Standart SP mission 4 .map + script files
 4. BSP compiler
+5. MAP tutorials https://github.com/gtsh77/MOHTools/wiki
 
-Installation on UNIX:
+### Requirements:
+1. You need original MOH:AA .pk3 files (only for original models and textures usage)
+
+### Installation on UNIX:
 1. Install wine with 32-bit support
 ```sh
 cd /usr/port/emulators/i386-wine && sudo make install clean
@@ -33,7 +37,7 @@ wine /path/to/mohtools/mohradiant.exe
 Working example:<br/>
 ![screenshot_2017-12-11_17-17-39](https://user-images.githubusercontent.com/8376353/33835449-89913f6e-de97-11e7-9345-7745b6626876.png)
 
-6. Go to wiki to check some cool "my first room" tutorials
+6. Go to https://github.com/gtsh77/MOHTools/wiki to check some cool "my first room" tutorials
 
 # Original "Getting Started" by EA
 
