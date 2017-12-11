@@ -34,8 +34,8 @@ wine /path/to/mohtools/mohradiant.exe
 
 5. Ensure that your paths (basepath, mapspath, autosave) in the project properly point to your MOHAA installation. This information is stored in the qe4 file.  You change settings anytime later from File->Project Settings
 
-Working example:<br/>
-![screenshot_2017-12-11_17-17-39](https://user-images.githubusercontent.com/8376353/33835449-89913f6e-de97-11e7-9345-7745b6626876.png)
+	Working example:<br/>
+	![screenshot_2017-12-11_17-17-39](https://user-images.githubusercontent.com/8376353/33835449-89913f6e-de97-11e7-9345-7745b6626876.png)
 
 6. Go to https://github.com/gtsh77/MOHTools/wiki to check some cool "my first room" tutorials
 
