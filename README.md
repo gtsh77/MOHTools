@@ -19,7 +19,7 @@ cd /usr/port/emulators/i386-wine && sudo make install clean
 ```
 2. Clone repo
 ```sh
-git@github.com:gtsh77/MOHTools.git mohtools
+git clone git@github.com:gtsh77/MOHTools.git mohtools
 ```
 
 3. Copy entdefs.pk3 to your MOHAA/main directory
