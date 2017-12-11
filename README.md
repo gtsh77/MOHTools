@@ -1,7 +1,9 @@
 # MoH Radiant (.map editor tools for MOH:AA)
 
+![screenshot_2017-12-11_17-16-49](https://user-images.githubusercontent.com/8376353/33835350-3e283820-de97-11e7-8073-424b792e7d5a.png)
+
 Includes:
-1. MoHRadiant - .map editor
+1. MoHRadiant .map editor
 2. Standart MP .map files (dm/mohdm1 - dm/mohdm7, obj_team1 - obj_team4) as they were released in 2005
 3. Standart SP mission 4 .map + script files
 4. BSP compiler
@@ -29,7 +31,7 @@ wine /path/to/mohtools/mohradiant.exe
 5. Ensure that your paths (basepath, mapspath, autosave) in the project properly point to your MOHAA installation. This information is stored in the qe4 file.  You change settings anytime later from File->Project Settings
 
 Working example:<br/>
-![screenshot_2017-12-11_17-05-54](https://user-images.githubusercontent.com/8376353/33834898-b309b4a4-de95-11e7-9e37-1ca64269f2c2.png)
+![screenshot_2017-12-11_17-17-39](https://user-images.githubusercontent.com/8376353/33835449-89913f6e-de97-11e7-9345-7745b6626876.png)
 
 6. Go to wiki to check some cool "my first room" tutorials
 
