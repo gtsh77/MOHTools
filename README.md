@@ -52,8 +52,7 @@ Getting Started With Basic Scripts for Allied Assault Levels
 	* Basepath: Set this path to your MOHAA folder(ex. c:\program files\ea games\mohaa\)
 	* Mapspath: Set this path to your MOHAA\maps folder (ex c:\program files\ea games\mohaa\maps)
 	* Autosave: If autosaving is enabled, MOHRadiant will automatically save your map to the folder located under this path.
-
-Leave the rest of paths as their default.
+	* Leave the rest of paths as their default.
 
 3. Setup your preferences, located Edit > Preferences.  For this tutorial we’ll be using the default preferences.
 
@@ -109,7 +108,7 @@ Leave the rest of paths as their default.
 	cache weapons/m1_garand.tik
 	cache weapons/mp40.tik
 	```
-The above is taken from m1l1_mymap_precache.scr.  You’ll also have to precache the basic effects listed below the cache weapons in m1l1_mymap_precache.scr.
+	The above is taken from m1l1_mymap_precache.scr.  You’ll also have to precache the basic effects listed below the cache weapons in m1l1_mymap_precache.scr.
 
 7. To get a better understanding of scripting, extract MOHAA pak#.pk3 archives to your MOHAA\main folder.
 
@@ -174,5 +173,4 @@ The above is taken from m1l1_mymap_precache.scr.  You’ll also have to precache
 
 5. Deathmatch maps must be placed in maps/dm folder, and deathmatch-objective maps must be placed in maps/obj folder. Place your .bsp, .scr and *_precache.scr files in these folders.
 
-
->Special Thanks to Ben Munroe for putting this doc together
+**Special Thanks to Ben Munroe for putting this doc together*
