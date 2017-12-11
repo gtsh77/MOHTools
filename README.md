@@ -1,15 +1,25 @@
-# MoH Radiant (.map editor tool for MOH:AA)
+# MoH Radiant (.map editor tools for MOH:AA)
 
+Includes:
+1. MoHRadiant - .map editor
+2. Standart MP .map files (dm/mohdm1 - dm/mohdm7, obj_team1 - obj_team4) as they were released in 2005
+3. Standart SP mission 4 .map + script files
+4. BSP compiler
+
+Installation on UNIX:
 1. Install wine with 32-bit support
 ```sh
 cd /usr/port/emulators/i386-wine && sudo make install clean
 ```
 2. Clone repo
 ```sh
-git clone ... mohtools
+git@github.com:gtsh77/MOHTools.git mohtools
 ```
 
 3. Copy entdefs.pk3 to your MOHAA/main directory
+```sh
+mv /path/to/mohtools/entdefs.pk3 /path/to/mohaa/main
+```
 
 4. Start
 ```sh
@@ -17,6 +27,9 @@ wine /path/to/mohtools/mohradiant.exe
 ```
 
 5. Ensure that your paths (basepath, mapspath, autosave) in the project properly point to your MOHAA installation. This information is stored in the qe4 file.  You change settings anytime later from File->Project Settings
+
+Working example:<br/>
+![screenshot_2017-12-11_17-05-54](https://user-images.githubusercontent.com/8376353/33834898-b309b4a4-de95-11e7-9e37-1ca64269f2c2.png)
 
 6. Go to wiki to check some cool "my first room" tutorials
 
@@ -71,7 +84,7 @@ Singleplayer specific
 4. The next part to creating your singleplayer level is the scripting.  Using notepad create a file named the same as your map but with a .scr extension.  Ex. M1L1_mymap.scr.  Through this script file we can add weapons for the player, level music, execute global scripts, and much more.
 
 5. With our script, we’ll add a few weapons. Below is the basic script we’ll be using (ex. From m1l1_mymap.scr):
-
+```
 main:
 
 level waittill prespawn
@@ -83,13 +96,13 @@ level waittill prespawn
 level waittill spawn
 
 end
-
+```
 6. After scripting, you must create a precache script, using notepad create a file called yourmap_precache.scr.  This script will tell the engine to precache certain items.  In our script we added a few weapons, they will have to be added to the precache like this:
-
+```
 cache weapons/colt45.tik
 cache weapons/m1_garand.tik
 cache weapons/mp40.tik
-
+```
 The above is taken from m1l1_mymap_precache.scr.  You’ll also have to precache the basic effects listed below the cache weapons in m1l1_mymap_precache.scr.
 
 7. To get a better understanding of scripting, extract MOHAA pak#.pk3 archives to your MOHAA\main folder.
@@ -99,6 +112,7 @@ Multiplayer specific
 1. The first entities to add when creating a multiplayer map, will be info_player_deathmatch, right click anywhere on the mapping grid and select Info > Player > Deathmatch.  In normal deathmatch gameplay mode, players will spawn in these entities.  When creating a team deathmatch map, you must add info_player_axis entities, and info_player_allied entities, you can add these entities the same way you added deathmatch entities.  If you add an info_player_start entity it will be used as the spectator start, where the player chooses his team.
 
 2. The most important part to creating multiplayer levels is the scripting.  Below is the basic deathmatch script:
+```
 main:
 
 // set scoreboard messages
@@ -145,11 +159,11 @@ roundbasedthread:
 	level waittill roundstart
 
 end
-
+```
 3. Next you must create a precache file, named yourmap_precache.scr, but this time all you need to add is:
-
+```
 exec global/DMprecache.scr
-
+```
 4. To create a loading screen for your map, you must create a 512x512 32-bit .tga image named textures/mohmenu/dmloading/mymap.tga, you can do this in most any image editing software.  To make your map load this image, you must create a scripts/yourmap.shader file, and a ui/loading_yourmap.urc file.  Please see mymap.shader and loading_mymap.urc for examples of these files.  Note: If you see, setcvar "g_scoreboardpic" "mymap" from the deathmatch script, you’ll notice that it calls scoreboard picture from your .shader file, so remember to keep the names exactly the same.
 
 5. Deathmatch maps must be placed in maps/dm folder, and deathmatch-objective maps must be placed in maps/obj folder. Place your .bsp, .scr and *_precache.scr files in these folders.
