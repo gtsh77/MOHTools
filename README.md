@@ -7,7 +7,7 @@
 2. Standart MP .map files (dm/mohdm1 - dm/mohdm7, obj_team1 - obj_team4) as they were released in 2005
 3. Standart SP mission 4 .map + script files
 4. BSP compiler
-5. MAP tutorials https://github.com/gtsh77/MOHTools/wiki
+5. [MOH:AA DEV references & MAP tutorials](https://github.com/gtsh77/MOHTools/wiki)
 
 ### Requirements:
 * You need original MOH:AA .pk3 files (only for original models and textures usage)
