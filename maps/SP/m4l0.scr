@@ -1,0 +1,343 @@
+// FARM HOUSE 
+// ARCHITECTURE: TODD/AC
+// SCRIPTING: AC/MACKEY/Z
+
+	exec global/ai.scr
+	exec global/loadout.scr maps/m4l0.scr
+	exec global/exploder.scr
+
+main:
+level waittill prespawn
+	local.tempstring = "0.25 0.15 0.1"
+	setcvar cg_playermodel 0
+	level.farplane = 25000
+	level.farplanecolor = local.tempstring
+	
+	fadeout 0.1 0 0 0 1
+
+	huddraw_alpha 100 0
+
+	exec global/bomber.scr
+	exec global/ambient.scr m4l0
+
+	//	exec global/weather.scr 3500 (0.333 0.333 0.359)
+	exec global/friendly.scr
+	exec global/door_locked.scr
+
+level waittill spawn
+	fadein 2 0 0 0 1
+	wait 2
+
+
+	thread dogs
+	println "disabling AI"
+	level.frienddebug = 1
+
+	level.friendly1 exec global/disable_ai.scr
+	level.friendly2 exec global/disable_ai.scr
+	level.friendly3 exec global/disable_ai.scr
+	level.friendly4 exec global/disable_ai.scr
+
+//	level.friendly1 scale 5
+	level.friendly1.health = 755
+	level.friendly2.health = 750
+	level.friendly3.health = 750
+	level.friendly4.health = 750
+
+	for (local.i=1;local.i<level.enemys+1;local.i++)
+	{
+		println local.i
+//		level.enemy[local.i] exec global/disable_ai.scr
+	}
+	
+
+	
+level.script = "maps/m4l0.scr"
+
+level.flyplane = 1
+
+
+
+waitthread global/objectives.scr::add_objectives 1 2 "Find allied soldiers." $obj1.origin
+waitthread global/objectives.scr::add_objectives 2 2 "Take secret German documents." $obj2.origin
+waitthread global/objectives.scr::add_objectives 3 1 "Exfiltrate." $obj3.origin
+waitthread global/objectives.scr::current_objectives 1	
+
+//	$player.origin = ( 5192.00 1168.00 502.00 )
+end
+
+
+dogspawn local.origin local.set:
+	local.ent = spawn animal/german_shepherd
+	local.ent model "animal/german_shepherd.tik"
+	local.ent.origin = local.origin
+	local.ent.targetname = "dogspawn"
+	local.ent.set = local.set
+end
+
+killself:
+	wait 1
+	self delete
+end
+
+dogs:
+	level.spawneddogs = 0
+	local.origin1 = (1064 -3576 136)
+	local.origin2 = ( -544 720 280)
+	local.origin3 = ( -3040 6448 -16)
+	thread dogspawn local.origin1 1
+	thread dogspawn local.origin2 2
+	thread dogspawn local.origin3 3
+	local.doghealth = 25
+
+	for (local.i=1;local.i<$dogspawn.size + 1;local.i++)
+	{	
+		level.dogs = 1
+		if ($dogspawn[local.i].set != NIL)
+		{
+			local.ent = spawn script_origin
+			local.ent.origin = $dogspawn[local.i].origin
+			local.ent.set = $dogspawn[local.i].set
+			level.dogspawner[local.i] = local.ent
+			$dogspawn[local.i] thread killself
+		}
+		else
+		println ("dogspawn at " + $dogspawn[local.i].origin + " has no #set")
+	}
+
+
+	local.count = 0
+
+	while (1)
+	{
+		if (level.spawneddogs < 1)
+		{
+			if (local.count == 0)
+			{
+				if (vector_length ($player.origin - local.origin1) > 3000)
+				{
+					local.doghealth += 5
+					thread global/ai.scr::spawndog 1 local.doghealth
+				}
+				else
+					local.count++
+			}
+			else
+			if (local.count == 1)
+			{
+				if (vector_length ($player.origin - local.origin2) > 3000)
+				{
+					local.doghealth += 5
+					thread global/ai.scr::spawndog 2 local.doghealth
+				}
+				else
+					local.count++
+			}
+			else
+			{
+				if (vector_length ($player.origin - local.origin3) > 3000)
+				{
+					local.doghealth += 5
+					thread global/ai.scr::spawndog 3 local.doghealth
+				}
+			}
+
+		}
+		wait 1
+	
+	}
+end
+
+
+/////////////////////////////////////////////////////////////////////
+// Enables AI: Hear gun fire in the distance//
+////////////////////////////////////////////////////////////////////
+trigger1:
+
+	for (local.i=1;local.i<level.enemys+1;local.i++)
+	{
+		println local.i
+		level.enemy[local.i] exec global/enable_ai.scr
+	}
+
+	level.friendly1 exec global/enable_ai.scr
+	level.friendly2 exec global/enable_ai.scr
+	level.friendly3 exec global/enable_ai.scr
+	level.friendly4 exec global/enable_ai.scr
+
+	level.friendly1.friendtype = 5
+	level.friendly2.friendtype = 0
+	level.friendly3.friendtype = 0
+	level.friendly4.friendtype = 0
+
+
+	level.friendly1 thread global/friendly.scr::friendlythink
+	level.friendly2 thread global/friendly.scr::friendlythink
+	level.friendly3 thread global/friendly.scr::friendlythink
+	level.friendly4 thread global/friendly.scr::friendlythink
+
+	level.friendly1.mins = 50
+	level.friendly1.maxs = 150
+	level.friendly2.mins = 50
+	level.friendly2.maxs = 150
+	level.friendly3.mins = 50
+	level.friendly3.maxs = 150
+	level.friendly4.mins = 50
+	level.friendly4.maxs = 150
+
+
+	level.friendly3.destination = level.friendly1
+	level.friendly4.destination = level.friendly2
+
+//	level.friendly3.dist = 400
+//	level.friendly4.dist = 300
+
+	thread enemythread1
+end
+////////////////////////////////////////////////////////////
+// Changes friendly max and min dist//
+///////////////////////////////////////////////////////////
+trigger2:
+
+
+	level.friendly1 maxdist 2000
+	level.friendly1 mindist 128
+	level.friendly2 maxdist 2000
+	level.friendly2 mindist 128
+	level.friendly3 maxdist 2000
+	level.friendly3 mindist 128
+	level.friendly4 maxdist 2000
+	level.friendly4 mindist 128
+
+end
+
+
+/////////////////////////////////////////////////////////
+//Scene 2: Follow the Yellow Brick Road//
+//Spawn enemies in on left hill side, run to destinations//
+//////////////////////////////////////////////////////////
+
+charge1:
+
+	//thread global/ai.scr:: 11
+
+end
+
+charge2:
+
+	//thread global/ai.scr:: 12
+
+end
+
+//////////////////////////////////////////////////////////
+//Scene 3: The House//
+//Kill all enemies in the house, door opens//
+/////////////////////////////////////////////////////////
+
+enemythread1:
+waitthread global/objectives.scr::add_objectives 1 3 "Find allied soldiers." $obj1.origin
+// waitthread global/objectives.scr::current_objectives 2
+// waitthread global/objectives.scr::add_objectives 2 2 "Take secret German documents." $obj2.origin
+// trigger $obj1_door
+// trigger $nco1
+// trigger $nco2
+end
+
+////////////////////////////////////////////////////////
+//Scene 4: German siege//
+//Enemyspawners spawn in once papers have been taken//
+///////////////////////////////////////////////////////
+
+objective2:
+waitthread global/objectives.scr::add_objectives 2 3 "Take secret German documents." $obj2.origin
+waitthread global/objectives.scr::current_objectives 3
+waitthread global/objectives.scr::add_objectives 3 2 "Exfiltrate." $obj3.origin
+
+	if (isalive level.friendly2)
+		level.friendly2.friendtype = 1
+
+	if (isalive level.friendly3)
+		level.friendly3.friendtype = 1
+
+	if (isalive level.friendly4)
+		level.friendly4.friendtype = 1
+
+$documents remove
+$level_end_so remove
+$level_end_trigger remove
+// thread global/ai.scr::spawn 3 
+// thread global/ai.scr::spawn 4 4
+// thread global/ai.scr::spawn 5 8
+// thread global/ai.scr::spawn 6 12
+end
+
+/////////////////////////////////////////////////////
+//Scene 5: Open Field Battle//
+//Enemyspawners, make way to end of level//
+////////////////////////////////////////////////////
+
+objective3:
+	waitthread global/objectives.scr::add_objectives 3 3 "Exfiltrate" $obj3.origin
+	exec global/missioncomplete.scr m4l0
+end 		
+
+mass_ending1:
+	
+// 	thread global/ai.scr::spawn 7
+end
+
+mass_ending2:
+	
+// 	thread global/ai.scr::spawn 8 5
+	
+end
+
+mass_ending3:
+
+// 	thread global/ai.scr::spawn 9 10
+	
+end
+
+mass_ending4:
+	
+// 	thread global/ai.scr::spawn 10 15
+	
+end
+
+level_end_trigger:
+	iprintln "You have not completed all of your Objectives."
+end
+
+	t:
+		println ">>>>>>>>>>>>>"
+	for (local.i=1;local.i<level.friendlys+1;local.i++)
+	{
+//		if (level.friendly[local.i].destination.targetname == "friendly")
+//			println ("friendly" + level.friendly[local.i].fnum + " goes to " + level.friendly[local.i].destination + "/" + level.friendly[local.i].destination.fnum)
+//		else
+//			println ("friendly" + level.friendly[local.i].fnum + " goes to player")
+
+//		if (level.friendly[local.i].destination.fnum == NIL)
+//		println ("friendly" + level.friendly[local.i].fnum + " : Type " + level.friendly[local.i].friendtype + " : Area "  + level.friendly[local.i].area + " : AreaPast "  + level.friendly[local.i].areapast + " : Destination Node "  + level.friendly[local.i].destination.set)
+//		else
+//		println ("friendly" + level.friendly[local.i].fnum + " : Type " + level.friendly[local.i].friendtype + " : Area "  + level.friendly[local.i].area + " : AreaPast "  + level.friendly[local.i].areapast + " : Destination Entity "  + level.friendly[local.i].destination.fnum)
+		
+//		println level.playernodeset
+		if (level.friendly[local.i].destination != NIL)
+		if (level.friendly[local.i].destination.set == NIL)
+		println ("friendly" + level.friendly[local.i].fnum + " : Type " + level.friendly[local.i].friendtype + " : Area "  + level.friendly[local.i].area + " : AreaPast "  + level.friendly[local.i].areapast + " : destination " + level.friendly[local.i].friendtype + " : Area "  + level.friendly[local.i].area + " : AreaPast "  + level.friendly[local.i].destination )
+		else
+		println ("friendly" + level.friendly[local.i].fnum + " : Type " + level.friendly[local.i].friendtype + " : Area "  + level.friendly[local.i].area + " : AreaPast "  + level.friendly[local.i].areapast + " : destination " + level.friendly[local.i].friendtype + " : Area "  + level.friendly[local.i].area + " : AreaPast "  + level.friendly[local.i].destination.set )
+
+	}
+		println "<<<<<<<<<<<<<"
+	wait 4
+	goto t
+
+end
+
+
+// Exploder for showin off exploders
+kablam:
+	thread global/exploder.scr::explode 5
+end

@@ -1,0 +1,17 @@
+{
+"brush_primit" "0"
+"basepath" "Z:/home/dev/MOHAA"
+"rshcmd" ""
+"autosave" "Z:/home/dev/MOHAA/main/maps"
+"mapspath" "Z:/home/dev/MOHAA/main/maps"
+"remotebasepath" ""
+"modelmask" "*.tik"
+"entitydir" "code/"
+"moddir" "main"
+"bsp_BSP" "! q3map -v -gamedir ../mohaa/ $"
+"bsp_Vis (fast)" "! q3map -vis -v -fast -gamedir ../mohaa/ $"
+"bsp_Vis" "! q3map -vis -v -gamedir ../mohaa/ $"
+"bsp_Light (fast)" "! mohlight -v -fast -gamedir ../mohaa/ $"
+"bsp_Light" "! mohlight -v -gamedir ../mohaa/ $"
+"bsp_Light (final)" "! mohlight -v -final -gamedir ../mohaa/ $"
+}
