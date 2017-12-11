@@ -10,27 +10,27 @@
 5. MAP tutorials https://github.com/gtsh77/MOHTools/wiki
 
 ### Requirements:
-1. You need original MOH:AA .pk3 files (only for original models and textures usage)
+* You need original MOH:AA .pk3 files (only for original models and textures usage)
 
 ### Installation on UNIX:
 1. Install wine with 32-bit support
-```sh
-cd /usr/port/emulators/i386-wine && sudo make install clean
-```
-2. Clone repo
-```sh
-git clone git@github.com:gtsh77/MOHTools.git mohtools
-```
+	```sh
+	cd /usr/port/emulators/i386-wine && sudo make install clean
+	```
+2. Clone repository
+	```sh
+	git clone git@github.com:gtsh77/MOHTools.git mohtools
+	```
 
 3. Copy entdefs.pk3 to your MOHAA/main directory
-```sh
-mv /path/to/mohtools/entdefs.pk3 /path/to/mohaa/main
-```
+	```sh
+	mv /path/to/mohtools/entdefs.pk3 /path/to/mohaa/main
+	```
 
 4. Start
-```sh
-wine /path/to/mohtools/mohradiant.exe
-```
+	```sh
+	wine /path/to/mohtools/mohradiant.exe
+	```
 
 5. Ensure that your paths (basepath, mapspath, autosave) in the project properly point to your MOHAA installation. This information is stored in the qe4 file.  You change settings anytime later from File->Project Settings
 
